@@ -1,0 +1,14 @@
+[package]
+name = "bmp5"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+description = "An embedded_hal_async driver for the BMP5x series of pressure sensors from Bosch Sensortec."
+
+[dependencies]
+embedded-hal-async = "1.0.0"
+defmt = { version = "0.3", optional = true }
+
+[features]
+default = []
+defmt = ["dep:defmt"]
