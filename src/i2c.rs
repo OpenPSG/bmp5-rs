@@ -1,5 +1,5 @@
-pub use crate::Measurement;
-use crate::{Config, constants};
+use crate::{Config, Measurement, constants};
+use byteorder::{ByteOrder, LittleEndian};
 use embedded_hal_async::i2c::I2c;
 
 // I2C address
@@ -55,12 +55,10 @@ where
             .await
             .map_err(Error::I2c)?;
 
-        let raw_temp =
-            ((u32::from(buf[2]) << 16) | (u32::from(buf[1]) << 8) | u32::from(buf[0])) as i32;
+        let raw_temp = LittleEndian::read_i24(&buf);
         let temp_c = raw_temp as f32 / 65536.0;
 
-        let raw_press =
-            ((u32::from(buf[5]) << 16) | (u32::from(buf[4]) << 8) | u32::from(buf[3])) as i32;
+        let raw_press = LittleEndian::read_i24(&buf[3..]);
         let press_pa = raw_press as f32 / 64.0;
 
         Ok(Measurement {
@@ -69,7 +67,7 @@ where
         })
     }
 
-    async fn soft_reset(&mut self) -> Result<(), Error<E>> {
+    pub async fn soft_reset(&mut self) -> Result<(), Error<E>> {
         self.write_reg(constants::BMP5_REG_CMD, constants::BMP5_CMD_SOFT_RESET)
             .await?;
         self.delay.delay_us(2500).await;
