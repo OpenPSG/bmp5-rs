@@ -1,6 +1,6 @@
 [package]
 name = "bmp5"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "MPL-2.0"
 description = "An embedded_hal_async driver for the BMP5x series of pressure sensors from Bosch Sensortec."

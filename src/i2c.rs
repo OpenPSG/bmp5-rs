@@ -6,13 +6,16 @@ use embedded_hal_async::i2c::I2c;
 pub const BMP5_ADDRESS: u8 = 0x47; // SDO to GND
 pub const BMP5_ADDRESS_ALT: u8 = 0x46; // SDO to VDDIO
 
-#[derive(Debug)]
+/// BMP5 driver error
+#[derive(Debug, Copy, Clone)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum Error<E> {
     I2c(E),
     InvalidChipId(u8),
     InvalidConfig,
 }
 
+/// BMP5 driver
 pub struct Bmp5<I2C, D> {
     i2c: I2C,
     delay: D,
