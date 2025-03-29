@@ -124,6 +124,14 @@ where
         )
         .await?;
 
+        // Enable data ready interrupt
+        self.update_reg(
+            constants::BMP5_REG_INT_SOURCE,
+            constants::BMP5_INT_ENABLE_DRDY,
+            constants::BMP5_INT_ENABLE_DRDY,
+        )
+        .await?;
+
         // Return to normal operation mode
         self.update_reg(
             constants::BMP5_REG_ODR_CONFIG,
@@ -145,7 +153,7 @@ where
     async fn wait_for_drdy(&mut self) -> Result<(), Error<E>> {
         loop {
             let int_status = self.read_reg(constants::BMP5_REG_INT_STATUS).await?;
-            if int_status & constants::BMP5_INT_ASSERTED_DRDY != 0 {
+            if int_status & constants::BMP5_INT_STATUS_DRDY != 0 {
                 break;
             }
             self.delay

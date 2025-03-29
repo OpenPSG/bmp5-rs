@@ -112,9 +112,15 @@ pub(crate) const BMP5_IIR_FILTER_COEFF_127: u8 = 0x07;
 pub(crate) const BMP5_CHIP_ID: u8 = 0x50;
 pub(crate) const BMP5_CHIP_ID_ALT: u8 = 0x51;
 
+// Interrupt sources
+pub(crate) const BMP5_INT_ENABLE_DRDY: u8 = 0x01;
+pub(crate) const BMP5_INT_ENABLE_FIFO_FULL: u8 = 0x02;
+pub(crate) const BMP5_INT_ENABLE_FIFO_THRES: u8 = 0x04;
+pub(crate) const BMP5_INT_ENABLE_PRESSURE_OOR: u8 = 0x08;
+
 // Interrupt status
-pub(crate) const BMP5_INT_ASSERTED_DRDY: u8 = 0x01;
-pub(crate) const BMP5_INT_ASSERTED_FIFO_FULL: u8 = 0x02;
-pub(crate) const BMP5_INT_ASSERTED_FIFO_THRES: u8 = 0x04;
-pub(crate) const BMP5_INT_ASSERTED_PRESSURE_OOR: u8 = 0x08;
-pub(crate) const BMP5_INT_ASSERTED_POR_SOFTRESET_COMPLETE: u8 = 0x10;
+pub(crate) const BMP5_INT_STATUS_DRDY: u8 = 0x01;
+pub(crate) const BMP5_INT_STATUS_FIFO_FULL: u8 = 0x02;
+pub(crate) const BMP5_INT_STATUS_FIFO_THRES: u8 = 0x04;
+pub(crate) const BMP5_INT_STATUS_PRESSURE_OOR: u8 = 0x08;
+pub(crate) const BMP5_INT_STATUS_POR_SOFTRESET_COMPLETE: u8 = 0x10;
