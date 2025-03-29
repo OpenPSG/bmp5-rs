@@ -160,6 +160,45 @@ pub enum OutputDataRate {
     OutputDataRate240Hz,
 }
 
+impl OutputDataRate {
+    pub fn period_us(self) -> u32 {
+        match self {
+            OutputDataRate::OutputDataRate0_125Hz => 8_000_000,
+            OutputDataRate::OutputDataRate0_250Hz => 4_000_000,
+            OutputDataRate::OutputDataRate0_5Hz => 2_000_000,
+            OutputDataRate::OutputDataRate1Hz => 1_000_000,
+            OutputDataRate::OutputDataRate2Hz => 500_000,
+            OutputDataRate::OutputDataRate3Hz => 333_333,
+            OutputDataRate::OutputDataRate4Hz => 250_000,
+            OutputDataRate::OutputDataRate5Hz => 200_000,
+            OutputDataRate::OutputDataRate10Hz => 100_000,
+            OutputDataRate::OutputDataRate15Hz => 66_666,
+            OutputDataRate::OutputDataRate20Hz => 50_000,
+            OutputDataRate::OutputDataRate25Hz => 40_000,
+            OutputDataRate::OutputDataRate30Hz => 33_333,
+            OutputDataRate::OutputDataRate35Hz => 28_571,
+            OutputDataRate::OutputDataRate40Hz => 25_000,
+            OutputDataRate::OutputDataRate45Hz => 22_222,
+            OutputDataRate::OutputDataRate50Hz => 20_000,
+            OutputDataRate::OutputDataRate60Hz => 16_666,
+            OutputDataRate::OutputDataRate70Hz => 14_286,
+            OutputDataRate::OutputDataRate80Hz => 12_500,
+            OutputDataRate::OutputDataRate89_6Hz => 11_161,
+            OutputDataRate::OutputDataRate100_2Hz => 9_980,
+            OutputDataRate::OutputDataRate110_1Hz => 9_083,
+            OutputDataRate::OutputDataRate120Hz => 8_333,
+            OutputDataRate::OutputDataRate129_8Hz => 7_704,
+            OutputDataRate::OutputDataRate140Hz => 7_142,
+            OutputDataRate::OutputDataRate149_3Hz => 6_698,
+            OutputDataRate::OutputDataRate160Hz => 6_250,
+            OutputDataRate::OutputDataRate179_2Hz => 5_580,
+            OutputDataRate::OutputDataRate199_1Hz => 5_023,
+            OutputDataRate::OutputDataRate218_5Hz => 4_577,
+            OutputDataRate::OutputDataRate240Hz => 4_167,
+        }
+    }
+}
+
 impl From<OutputDataRate> for u8 {
     fn from(output_data_rate: OutputDataRate) -> u8 {
         match output_data_rate {

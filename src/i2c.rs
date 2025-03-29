@@ -45,6 +45,10 @@ where
     }
 
     pub async fn measure(&mut self) -> Result<Measurement, Error<E>> {
+        // Wait for the next sample to be ready.
+        self.wait_for_drdy().await?;
+
+        // Read in the measurement.
         let mut buf = [0u8; 6];
         self.i2c
             .write_read(
@@ -92,7 +96,6 @@ where
         )
         .await?;
 
-        // From datasheet's table 4: electrical characteristics
         self.delay.delay_us(2500).await;
 
         // Configure oversampling for pressure and temperature
@@ -136,6 +139,19 @@ where
             return Err(Error::InvalidConfig);
         }
 
+        Ok(())
+    }
+
+    async fn wait_for_drdy(&mut self) -> Result<(), Error<E>> {
+        loop {
+            let int_status = self.read_reg(constants::BMP5_REG_INT_STATUS).await?;
+            if int_status & constants::BMP5_INT_ASSERTED_DRDY != 0 {
+                break;
+            }
+            self.delay
+                .delay_us(self.config.output_data_rate.period_us() / 4)
+                .await;
+        }
         Ok(())
     }
 
